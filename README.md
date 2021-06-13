@@ -11,7 +11,7 @@ The russian version of the task can be found in the repository.
     2.1. [List 1.](#list-1)
 
 
-## Chapter I
+# Chapter I
 
 ## Level 1. Hall.
 
@@ -56,7 +56,7 @@ The next moment, the sound of a printer came from the corner, although it seemed
 ***LOADING...***
 
 
-## Chapter II
+# Chapter II
 
 ## List 1.
 
