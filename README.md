@@ -49,12 +49,53 @@ One of the walls features a big screen with some text on it. A small group of pe
     It's time to start developing. 
     I've sent everything else I have on this game to the printer.
 
-The next moment, the sound of a printer came from the corner, although it seemed like it wasn't there before.
+The next moment, the sound of a printer came from the corner, although it seemed 
+like it wasn't there before.
 
-***== Quest received. Develop an src/pong.c program for a two-player game, similar to Pong. To display the graphics, only use ASCII characters (with output to the terminal). There are two possible implementation options: interactive (complex version) and step-by-step (simplified version). The step-by-step version must be implemented using only the material of the course studied so far and the standard library. For the interactive version, additional libraries can be used to simplify the processing of the players' actions (but not for graphics). Keys: A/Z and K/M to move the rackets; space bar to skip an action at a certain step of the game in step-by-step mode. The field is a 80 x 25-symbol rectangle. Racket size is 3 symbols; ball size is 1 symbol. When one of the players scores 21 points, congratulations to the winner are displayed on the screen and the game ends. When developing the game, follow the principles of structured programming of E. Dijkstra. Important notes: the game must be written in C, have a structured style, and run from the terminal; your source code will be tested by the static analyzer "' cppcheck``, as well as the style linter ``cpplint``. Instructions on how to run these tests on your computer are in the materials folder. ==***
+***== Quest received. Develop an src/pong.c program for a two-player game, 
+similar to Pong. To display the graphics, only use ASCII characters (with output 
+to the terminal). You need to implement the step-by-step 
+version using only the material of the course studied 
+so far and the standard library.***
+
+* ***Keys***:
+
+***A/Z and K/M - to move the rackets;***
+
+***Space Bar - to skip an action at a certain step of the game in step-by-step mode.***
+
+* ***Graphics***
+
+***The field is a 80 x 25-symbol rectangle.*** 
+
+***Racket size is 3 symbols;*** 
+
+***Ball size is 1 symbol.***
+
+* ***UI/UX***
+
+***When one of the players scores 21 points, congratulations to the winner are displayed on the screen and the game ends.==***
+
+## Bonus Part:
+***== Quest received. You need to implement interactive version of the PONG. Additional 
+libraries can be used to simplify the processing of the players' actions (but not for graphics).==***
+
+## Important notes:
+
+* The game must be written in C, have a structured style, and run from the terminal; 
+  
+* Your source code will be tested by the static analyzer `cppcheck`, as well as the style linter `cpplint`. 
+  
+* Instructions on how to run these tests on your computer are in the `materials` folder. 
+  
+* We also recommend taking a look at the `code-samples` folder.
+
+* Check your program for memory leaks!
+
+> When developing the game, follow 
+the principles of structured programming of E. Dijkstra.
 
 ***LOADING...***
-
 
 # Chapter II
 
