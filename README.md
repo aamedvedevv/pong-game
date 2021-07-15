@@ -78,7 +78,7 @@ so far and the standard library.***
 
 ## Bonus Part:
 ***== Quest received. You need to implement interactive version of the PONG. Additional 
-libraries can be used to simplify the processing of the players' actions (but not for graphics).==***
+libraries can be used to simplify the processing of the players' actions and displaying symbolic graphics..==***
 
 ## Important notes:
 
