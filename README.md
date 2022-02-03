@@ -90,8 +90,6 @@ libraries can be used to simplify the processing of the players' actions and dis
   
 * We also recommend taking a look at the `code-samples` folder.
 
-* Check your program for memory leaks!
-
 * It is forbidden to use dynamic memory
 
 > When developing the game, follow 
