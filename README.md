@@ -1,6 +1,8 @@
 # P01D06 
 The russian version of the task can be found in the repository.
 
+You can find some useful video materials [here](https://edu.21-school.ru/video/selection/2a874185-0749-4c6d-becb-460f58dcf32d).
+
 ![dayp01](misc/eng/images/dayp01.png)
 
 ## Contents
