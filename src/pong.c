@@ -87,7 +87,7 @@ void moveBall(int *ball1_x, int *ball1_y, int *vector_X, int *vector_Y,
          *ball1_y == *rocket_2_Y + 1)) {
         *vector_X = -(*vector_X);
     }
-        msSleep(0.08);
+        msSleep(0.06);
         *ball1_y += *vector_Y;
         *ball1_x += *vector_X;
 // Складываем координаты мяча и значение вектора
@@ -125,7 +125,7 @@ void screenRender(const int *rocket_1_Y, const int *rocket_2_Y,
 // Отступ до другого поля
     }
 
-    for (int y = 0; y < 27; ++y) {
+    for (int y = 0; y < 26; ++y) {
 // Цикл выполняет 27 итераций для прорисовки поля игры по оси y
         for (int x = 0; x < 82; ++x) {
 // Цикл выполняет 82 итераций для прорисовки поля игры по оси x
@@ -204,47 +204,62 @@ void setKeyboard() {
     new_settings = initial_settings;
     new_settings.c_lflag &= ~ICANON;
     new_settings.c_lflag &= ~ECHO;
+    //Убирает вывод символов при вводе
     new_settings.c_lflag &= ~ISIG;
+    //Убирает нажатие Enter-а для ввода
     new_settings.c_cc[VMIN] = 1;
+    // Устанавливает минимальное количество символов
     new_settings.c_cc[VTIME] = 0;
+    // Убирает задержку для ввода символов
     tcsetattr(0, TCSANOW, &new_settings);
 }
 
 void resetKeyboard() {
+    // Сбрасывает до дефолтных настроек
     tcsetattr(0, TCSANOW, &initial_settings);
 }
 
 int kbnit() {
+    // Проверка на наличие символа в буфере
     char ch;
-    int nread;
-    if (peek_character != -1) return 1;
-// Проверка на наличие символа в буфере
-    new_settings.c_cc[VMIN] = 0;
-    tcsetattr(0, TCSANOW, &new_settings);
-    nread = read(0, &ch, 1);
-    new_settings.c_cc[VMIN] = 1;
-    tcsetattr(0, TCSANOW, &new_settings);
+    int nread, ret = 0;
+    if (peek_character != -1) ret = 1;
+    else {
+            new_settings.c_cc[VMIN] = 0;
+            // Задает минимальное обязательное число символов на ввод
+            tcsetattr(0, TCSANOW, &new_settings);
+            // Устанавливает параметры консоли
+            nread = read(0, &ch, 1);
+            // Поток ввода
+            new_settings.c_cc[VMIN] = 1;
+            tcsetattr(0, TCSANOW, &new_settings);
+        }
     if (nread == 1) {
         peek_character = ch;
-        return 1;
+        ret = 1;
     }
-    return 0;
+    return ret;
 }
 
 char readch() {
-    char ch;
+    char ch, ret;
 
     if (peek_character != -1) {
+        // Обработка нажатия одной кнопки
         ch = peek_character;
         peek_character = -1;
-        return ch;
+        ret = ch;
+    } else {
+        read(0, &ch, 1);
+        ret = ch;
+        while(getchar() != '\n') continue;
+        // Хаваем буфер
     }
-    read(0, &ch, 1);
-        while (getchar() != '\n') continue;
-        return ch;
-    }
+    return ret;
+}
 
 int checkScore(int *scPlayer1, int *scPlayer2, int *ball1_x, int *ball1_y) {
+    int ret = 0;
 // Проверка счета игроков, когда у кого нибудь 21 - победа
     if (*ball1_x < 2) {
         *scPlayer2 += 1;
@@ -261,12 +276,12 @@ int checkScore(int *scPlayer1, int *scPlayer2, int *ball1_x, int *ball1_y) {
     if (*scPlayer1 == 21) {
         printf("\nОтлично сработано!!! Выиграл игрок 1 со счётом %d : %d", *scPlayer1, *scPlayer2);
 // Выводит сообщение о победе в консоль
-        return 1;
+        ret = 1;
     } else if (*scPlayer2 == 21) {
         printf("\nОтлично сработано!!! Выиграл игрок 2 со счётом %d : %d", *scPlayer2, *scPlayer1);
-        return 1;
+        ret = 1;
     }
-    return 0;
+    return ret;
     }
 
 void clearScreen() {
@@ -278,6 +293,7 @@ void moveRocket(int *rocket_1_Y, int *rocket_2_Y) {
 // Функция, двигающая ракетку
 
   setKeyboard();
+  // Устанавливаем параметры для консоли, чтобы она не выводила символы
   if (kbnit()) {
       char temp;
       temp = readch();
