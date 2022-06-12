@@ -7,6 +7,7 @@
 #include "moveRocket.h"
 #include "screenRender.h"
 #include "clearScreen.h"
+#include "checkScore.h"
 
 int main() {
  int rocket_1_Y = 19;       // Переменные по умолчанию - положение рок 1
@@ -29,6 +30,10 @@ int main() {
          &rocket_1_Y, &rocket_2_Y);
          
         clearScreen();
+        if (checkScore(&scorePlayer_1, &scorePlayer_2,
+              &ball_X, &ball_Y)) {
+            break;
+           }
     }
     return 0;
 }
