@@ -240,9 +240,9 @@ char readch() {
         return ch;
     }
     read(0, &ch, 1);
-    while(getchar() != '\n') continue;
-    return ch;
-}
+        while (getchar() != '\n') continue;
+        return ch;
+    }
 
 int checkScore(int *scPlayer1, int *scPlayer2, int *ball1_x, int *ball1_y) {
 // Проверка счета игроков, когда у кого нибудь 21 - победа
@@ -281,7 +281,7 @@ void moveRocket(int *rocket_1_Y, int *rocket_2_Y) {
   if (kbnit()) {
       char temp;
       temp = readch();
-      
+
 // Берем символ из буфера
       if (temp == 'a' && ((*rocket_1_Y - 2) != 0))
 // Условия для игрока_1. Если нажата клавиша А и ракетка находится не в верхней границе
