@@ -3,7 +3,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "moveBall.h"
+#include "moveRocket.h"
+#include "screenRender.h"
+#include "clearScreen.h"
 
 int main() {
  int rocket_1_Y = 19;       // Переменные по умолчанию - положение рок 1
@@ -16,7 +19,16 @@ int main() {
  int scorePlayer_2 = 0;     // счет 2 игрока
     
     while (1){
+        screenRender(&rocket_1_Y, &rocket_2_Y, &ball_X, &ball_Y,
+              &scorePlayer_1, &scorePlayer_2);
+
+        moveRocket(&rocket_1_Y, &rocket_2_Y);
         
+        moveBall(&ball_X, &ball_Y,
+         &vector_X, &vector_Y,
+         &rocket_1_Y, &rocket_2_Y);
+         
+        clearScreen();
     }
     return 0;
 }
