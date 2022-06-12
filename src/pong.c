@@ -87,7 +87,7 @@ void moveBall(int *ball1_x, int *ball1_y, int *vector_X, int *vector_Y,
          *ball1_y == *rocket_2_Y + 1)) {
         *vector_X = -(*vector_X);
     }
-        msSleep(0.08);
+        msSleep(0.06);
         *ball1_y += *vector_Y;
         *ball1_x += *vector_X;
 // Складываем координаты мяча и значение вектора
