@@ -168,7 +168,7 @@ void screenRender(const int *rocket_1_Y, const int *rocket_2_Y,
 // Указание адреса, где необходимо реализовать надпись инструкции по управлению и счет игроков
                 printf("Нажми \'c\' чтобы выйти           Первый игрок: %d | Второй игрок: %d"
                        , *scPlayer1, *scPlayer2);
-            } else if (*scPlayer1 >= 10 || *scPlayer2 >= 10) {
+            } else if ((*scPlayer1 >= 10 && *scPlayer1 <= 21) || (*scPlayer2 >= 10 && *scPlayer2 <= 21)) {
 // Считывание счета игроков и смещение отрисовки правого поля в зависимости от счета
                 if (*scPlayer1 >= 10 && *scPlayer2 >= 10) {
                     if ((y == 1 && x < 14) || (y != 1)) {
@@ -177,7 +177,7 @@ void screenRender(const int *rocket_1_Y, const int *rocket_2_Y,
                 } else if ((y == 1 && x < 15) || (y != 1)) {
                     printf(" ");
                 }
-            } else if (*scPlayer1 < 10 || *scPlayer2 < 10) {
+            } else if ((*scPlayer1 >= 0 && *scPlayer1 < 10) || (*scPlayer2 >= 0 && *scPlayer2 < 10)) {
                 if ((y == 1 && x < 16) || (y != 1)) {
                     printf(" ");
                 }
@@ -268,7 +268,6 @@ void clearScreen() {
 
 void moveRocket(int *rocket_1_Y, int *rocket_2_Y) {
 // Функция, двигающая ракетку
-  char temp;
   system("stty -echo");
 // Стандартная функция из библиотеки stdlib.hю
   system("stty raw");
@@ -276,6 +275,7 @@ void moveRocket(int *rocket_1_Y, int *rocket_2_Y) {
   setKeyboard();
 // А так же не требует переноса строки для ввода символа
   if (kbnit()) {
+      char temp;
       temp = readch();
 // Берем символ из буфера
       if (temp == 'a' && ((*rocket_1_Y - 2) != 0))
