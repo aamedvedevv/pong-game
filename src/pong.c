@@ -7,6 +7,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <time.h>
+#include <math.h>
 
 void moveBall(int *ball1_x, int *ball1_y, int *vector_X, int *vector_Y,
     const int *rocket_1_Y, const int *rocket_2_Y);
@@ -21,8 +23,12 @@ void resetKeyboard();
 void clearScreen();
 int kbnit();
 char getch();
+void msSleep(float x);
 struct termios initial_settings, new_settings;
 int peek_character = -1;
+
+
+
 
 int main() {
     int rocket_1_Y = 19;
@@ -81,6 +87,7 @@ void moveBall(int *ball1_x, int *ball1_y, int *vector_X, int *vector_Y,
          *ball1_y == *rocket_2_Y + 1)) {
         *vector_X = -(*vector_X);
     }
+        msSleep(0.08);
         *ball1_y += *vector_Y;
         *ball1_x += *vector_X;
 // Складываем координаты мяча и значение вектора
@@ -230,9 +237,10 @@ char readch() {
     if (peek_character != -1) {
         ch = peek_character;
         peek_character = -1;
-    } else {
-        read(0, &ch, 1);
+        return ch;
     }
+    read(0, &ch, 1);
+    while(getchar() != '\n') continue;
     return ch;
 }
 
@@ -268,15 +276,12 @@ void clearScreen() {
 
 void moveRocket(int *rocket_1_Y, int *rocket_2_Y) {
 // Функция, двигающая ракетку
-  system("stty -echo");
-// Стандартная функция из библиотеки stdlib.hю
-  system("stty raw");
-// Убирает отрисовку символа в терминале при нажатии на клавишу
+
   setKeyboard();
-// А так же не требует переноса строки для ввода символа
   if (kbnit()) {
       char temp;
       temp = readch();
+      
 // Берем символ из буфера
       if (temp == 'a' && ((*rocket_1_Y - 2) != 0))
 // Условия для игрока_1. Если нажата клавиша А и ракетка находится не в верхней границе
@@ -300,7 +305,11 @@ void moveRocket(int *rocket_1_Y, int *rocket_2_Y) {
 // Условие выхода из игры
         exit(1);}
   }
-  system("stty echo");
-// Возвращаем параметры терминала обратно
-  system("stty cooked");
+}
+
+void msSleep(float sec) {
+    struct timespec tv;
+    tv.tv_sec = floor(sec);
+    tv.tv_nsec = ((sec - floor(sec)) * 1000000000);
+    nanosleep(&tv, NULL);
 }
