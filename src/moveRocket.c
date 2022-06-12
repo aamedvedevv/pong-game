@@ -2,36 +2,31 @@
 #include <stdio.h>
 #include "moveRocket.h"
 
-void moveRocket(int *rocket_1_Y, int *rocket_2_Y) {
-  char temp;
-  system("stty -echo");
-  system("stty raw");
-  temp = getchar();
-  if (temp == 'a' && ((*rocket_1_Y - 2) != 0))
-    *rocket_1_Y -= 1;
+void moveRocket(int *rocket_1_Y, int *rocket_2_Y) {       // Функция, двигающая ракетку
+  char temp;                
+  system("stty -echo");                                   // Стандартная функция из библиотеки stdlib.hю              
+  system("stty raw");                                     // Убирает отрисовку символа в терминале при нажатии на клавишу
+                                                          // А так же не требует переноса строки для ввода символа
 
-  else if (temp == 'z' && ((*rocket_1_Y + 2) != 26))
+  temp = getchar();                                       // Берем символ из буфера
+
+  if (temp == 'a' && ((*rocket_1_Y - 2) != 0))            // Условия для игрока_1. Если нажата клавиша А и ракетка находится не в верхней границе
+    *rocket_1_Y -= 1;                                     // то двигаем ее наверх
+
+  else if (temp == 'z' && ((*rocket_1_Y + 2) != 26))      // Если нажата Z и ракетка не в нижней границе, то двигаем ее вниз
     *rocket_1_Y += 1;
 
-  else if (temp == 'k' && ((*rocket_2_Y -2) != 0))
-    *rocket_2_Y -= 1;
+  else if (temp == 'k' && ((*rocket_2_Y -2) != 0))        // Условия для игрока_2. Точно та же логика, что и для игрока_1, только с кнопками
+    *rocket_2_Y -= 1;                                     // К и М
 
   else if (temp == 'm' && ((*rocket_2_Y + 2) != 26))
     *rocket_2_Y += 1;
 
-  if (temp == 'c')
+  if (temp == 'c')                                        // Условие выхода из игры
     exit(1);
-    
-  system("stty echo");
+
+  system("stty echo");                                    // Возвращаем параметры терминала обратно
   system("stty cooked");
 }
 
 
-/*switch (temp = getchar()) {
-  case 'a' : ((*rocket_1_Y - 2) != 0) ? (*rocket_1_Y -= 1) : *rocket_1_Y; break;
-  case 'z' : ((*rocket_1_Y + 2) != 27 - 1) ? (*rocket_1_Y += 1) : *rocket_1_Y; break;
-  case 'k' : ((*rocket_2_Y - 2) != 0) ? (*rocket_2_Y -= 1) : *rocket_2_Y; break;
-  case 'm' : ((*rocket_2_Y + 2) != 27 - 1) ? (*rocket_2_Y += 1) : *rocket_2_Y; break;
-  case 'c' : exit(1);
-   default: ;
- }*/
