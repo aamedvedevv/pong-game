@@ -116,7 +116,7 @@ void screenRender(const int *rocket_1_Y, const int *rocket_2_Y,
             } else if ((y == 1 && x < 80) || (y != 2 && x < 80)) {
 // Отступы y = 1 и y != 2 с ограничениями до x 80
                 printf(" ");
-            } else if (y == 2 && x < 82 - 33) {
+            } else if (y == 2 && x < 49) {
 // Отступы y = 2 со смещением надписи по x
                 printf(" ");
   }
@@ -125,7 +125,7 @@ void screenRender(const int *rocket_1_Y, const int *rocket_2_Y,
 // Отступ до другого поля
     }
 
-    for (int y = 0; y < 26; ++y) {
+    for (int y = 0; y < 27; ++y) {
 // Цикл выполняет 27 итераций для прорисовки поля игры по оси y
         for (int x = 0; x < 82; ++x) {
 // Цикл выполняет 82 итераций для прорисовки поля игры по оси x
@@ -204,33 +204,34 @@ void setKeyboard() {
     new_settings = initial_settings;
     new_settings.c_lflag &= ~ICANON;
     new_settings.c_lflag &= ~ECHO;
-    //Убирает вывод символов при вводе
+// Убирает вывод символов при вводе
     new_settings.c_lflag &= ~ISIG;
-    //Убирает нажатие Enter-а для ввода
+// Убирает нажатие Enter-а для ввода
     new_settings.c_cc[VMIN] = 1;
-    // Устанавливает минимальное количество символов
+// Устанавливает минимальное количество символов
     new_settings.c_cc[VTIME] = 0;
-    // Убирает задержку для ввода символов
+// Убирает задержку для ввода символов
     tcsetattr(0, TCSANOW, &new_settings);
 }
 
 void resetKeyboard() {
-    // Сбрасывает до дефолтных настроек
+// Сбрасывает до дефолтных настроек
     tcsetattr(0, TCSANOW, &initial_settings);
 }
 
 int kbnit() {
-    // Проверка на наличие символа в буфере
+// Проверка на наличие символа в буфере
     char ch;
-    int nread, ret = 0;
-    if (peek_character != -1) ret = 1;
-    else {
+    int nread = 0, ret = 0;
+    if (peek_character != -1)  {
+        ret = 1;
+    } else {
             new_settings.c_cc[VMIN] = 0;
-            // Задает минимальное обязательное число символов на ввод
+// Задает минимальное обязательное число символов на ввод
             tcsetattr(0, TCSANOW, &new_settings);
-            // Устанавливает параметры консоли
+// Устанавливает параметры консоли
             nread = read(0, &ch, 1);
-            // Поток ввода
+// Поток ввода
             new_settings.c_cc[VMIN] = 1;
             tcsetattr(0, TCSANOW, &new_settings);
         }
@@ -245,15 +246,15 @@ char readch() {
     char ch, ret;
 
     if (peek_character != -1) {
-        // Обработка нажатия одной кнопки
+// Обработка нажатия одной кнопки
         ch = peek_character;
         peek_character = -1;
         ret = ch;
     } else {
         read(0, &ch, 1);
         ret = ch;
-        while(getchar() != '\n') continue;
-        // Хаваем буфер
+        while (getchar() != '\n') continue;
+// Хаваем буфер
     }
     return ret;
 }
