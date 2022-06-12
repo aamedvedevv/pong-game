@@ -13,11 +13,13 @@ void clearScreen();
 void screenRender(const int *rocket_1_Y, const int *rocket_2_Y,
    const int *ball1_x, const int *ball1_y,
    int *scPlayer1, int *scPlayer2i);
+int checkScore(int *scPlayer1, int *scPlayer2, int *ball1_x, int *ball1_y);
 void setKeyboard();
 void resetKeyboard();
+void clearScreen();
 int kbnit();
 char getch();
-struct Termios new_settings, initial_settings;
+struct termios initial_settings, new_settings;
 int peek_character = -1;
 
 int main() {
@@ -184,7 +186,7 @@ char readch() {
 
     if (peek_character != -1) {
         ch = peek_character;
-        peek_character = -1
+        peek_character = -1;
     } else {
         read(0, &ch, 1);
     }
@@ -192,7 +194,30 @@ char readch() {
      
 }
 
+int checkScore(int *scPlayer1, int *scPlayer2, int *ball1_x, int *ball1_y) {                        // Проверка счета игроков, когда у кого нибудь 21 - победа
+ if (*ball1_x < 2) {
+ *scPlayer2 += 1;
+ *ball1_x = 41;                                                                                     // Возвращает мяч в начальную точку
+ *ball1_y = 13;
+ }
+ if (*ball1_x > 79) {
+ *scPlayer1 += 1;
+ *ball1_x = 41;                                                                                     // Возвращает мяч в начальную точку
+ *ball1_y = 13;
+ }
+ if (*scPlayer1 == 21) {
+     printf("\nОтлично сработано!!! Выиграл игрок 1 со счётом %d : %d", *scPlayer1, *scPlayer2);    // Выводит сообщение о победе в консоль
+ return 1;
+ } else if (*scPlayer2 == 21) {
+   printf("\nОтлично сработано!!! Выиграл игрок 2 со счётом %d : %d", *scPlayer2, *scPlayer1);
+ return 1;
+ }
+ return 0;
+}
 
+void clearScreen() {                    // Функция очищает экран от предыдущих отрисовок, что позволяет нам видеть только 1 игровую таблицу
+ system("printf \033c");
+}
 
 void moveRocket(int *rocket_1_Y, int *rocket_2_Y) {       // Функция, двигающая ракетку
   char temp;                
