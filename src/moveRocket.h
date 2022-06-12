@@ -1,1 +1,0 @@
-void moveRocket(int *rocket_1_Y, int *rocket_2_Y);
