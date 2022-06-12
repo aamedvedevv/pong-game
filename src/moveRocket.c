@@ -5,7 +5,7 @@
 
 void moveRocket(int *rocket_1_Y, int *rocket_2_Y) {       // Функция, двигающая ракетку
   char temp;                
-  system("stty -echo");                                   // Стандартная функция из библиотеки stdlib.hю              
+  system("stty -echo");                                   // Стандартная функция из библиотеки stdlib.h
   system("stty raw");                                     // Убирает отрисовку символа в терминале при нажатии на клавишу
   setKeyboard();                                        // А так же не требует переноса строки для ввода символа
   if (kbnit()){
